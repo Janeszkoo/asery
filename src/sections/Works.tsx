@@ -198,7 +198,10 @@ export function Works() {
               onMouseLeave={() => handleMouseLeave(index)}
             >
               {/* Card content */}
-              <div className="relative aspect-[3/4] overflow-hidden bg-dark-gray">
+              <div 
+                className="relative aspect-[3/4] overflow-hidden bg-dark-gray cursor-pointer"
+                onClick={(e) => handlePurchaseClick(e, project.purchaseLink)}
+              >
                 <img
                   src={project.image}
                   alt={project.title}

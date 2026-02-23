@@ -54,7 +54,7 @@ export function Footer() {
               link,
               { x: -30, opacity: 0 },
               { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
-              `-=${0.35 - i * 0.1}`
+              i === 0 ? '-=0.35' : `-=${Math.max(0.1, 0.35 - i * 0.1)}`
             );
           }
         });
@@ -66,7 +66,7 @@ export function Footer() {
               link,
               { x: 30, opacity: 0 },
               { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
-              `-=${0.35 - i * 0.1}`
+              i === 0 ? '-=0.35' : `-=${Math.max(0.1, 0.35 - i * 0.1)}`
             );
           }
         });

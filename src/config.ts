@@ -122,7 +122,7 @@ export const worksConfig: WorksConfig = {
       price: 49,
       bpm: 140,
       key: "F# Minor",
-      purchaseLink: "#contact"
+      purchaseLink: "https://discord.gg/FKFNXyxmnn"
     },
     { 
       id: 2, 
@@ -132,7 +132,7 @@ export const worksConfig: WorksConfig = {
       price: 39,
       bpm: 85,
       key: "A Major",
-      purchaseLink: "#contact"
+      purchaseLink: "https://discord.gg/FKFNXyxmnn"
     },
     { 
       id: 3, 
@@ -142,7 +142,7 @@ export const worksConfig: WorksConfig = {
       price: 59,
       bpm: 150,
       key: "D Minor",
-      purchaseLink: "#contact"
+      purchaseLink: "https://discord.gg/FKFNXyxmnn"
     },
     { 
       id: 4, 
@@ -152,7 +152,7 @@ export const worksConfig: WorksConfig = {
       price: 45,
       bpm: 128,
       key: "E Minor",
-      purchaseLink: "#contact"
+      purchaseLink: "https://discord.gg/FKFNXyxmnn"
     },
   ],
 };
