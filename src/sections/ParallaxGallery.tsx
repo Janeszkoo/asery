@@ -81,12 +81,7 @@ const ParallaxGallery = () => {
     };
   }, []);
 
-  const scrollToTour = () => {
-    const tourSection = document.getElementById('tour');
-    if (tourSection) {
-      tourSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+
 
   return (
     <section

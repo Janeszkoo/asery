@@ -1,5 +1,4 @@
-import { ArrowLeft, ExternalLink } from 'lucide-react';
-import { tourScheduleConfig } from '../config';
+import { ArrowLeft } from 'lucide-react';
 
 interface SetupItem {
   name: string;

@@ -325,3 +325,17 @@ export const footerConfig: FooterConfig = {
     { id: 4, src: "/footer-4.jpg" },
   ],
 };
+
+// -- Unused Sections (Stub Configs) -----------------------------------------
+// These are template sections not currently used in the site
+// Add config data here if you want to enable them
+
+export const navigationConfig = { items: [] };
+export const aboutConfig = { content: "" };
+export const blogConfig = { posts: [] };
+export const contactConfig = { content: "" };
+export const faqConfig = { faqs: [] };
+export const pricingConfig = { tiers: [] };
+export const servicesConfig = { services: [] };
+export const testimonialsConfig = { testimonials: [] };
+export const worksConfig = { projects: [] };
