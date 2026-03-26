@@ -1,70 +1,57 @@
-import { useEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Navigation } from './components/Navigation';
-import { CustomCursor } from './components/CustomCursor';
-import { ParticleField } from './components/ParticleField';
-import { Hero } from './sections/Hero';
-import { About } from './sections/About';
-import { Works } from './sections/Works';
-import { Services } from './sections/Services';
-import { FAQ } from './sections/FAQ';
-import { Testimonials } from './sections/Testimonials';
-import { Pricing } from './sections/Pricing';
-import { Blog } from './sections/Blog';
-import { Contact } from './sections/Contact';
-import { Footer } from './sections/Footer';
+import { useState, useEffect } from 'react';
+import './index.css';
+import useLenis from './hooks/useLenis';
 import { siteConfig } from './config';
-
-gsap.registerPlugin(ScrollTrigger);
+import Hero from './sections/Hero';
+import AlbumCube from './sections/AlbumCube';
+import ParallaxGallery from './sections/ParallaxGallery';
+import TourSchedule from './sections/TourSchedule';
+import Footer from './sections/Footer';
+import SetupDetails from './sections/SetupDetails';
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<'home' | 'setup'>('home');
+  
+  // Initialize Lenis smooth scrolling
+  useLenis();
+
   useEffect(() => {
+    // Set page title from config
     if (siteConfig.title) {
       document.title = siteConfig.title;
     }
-    if (siteConfig.language) {
-      document.documentElement.lang = siteConfig.language;
+
+    // Add viewport meta for better mobile experience
+    const metaViewport = document.querySelector('meta[name="viewport"]');
+    if (metaViewport) {
+      metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
     }
 
-    // Refresh ScrollTrigger after initial render
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
+    // Scroll to top when page changes
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+  if (currentPage === 'setup') {
+    return <SetupDetails onBack={() => setCurrentPage('home')} />;
+  }
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Noise texture overlay */}
-      <div className="noise-overlay" />
+    <main className="relative w-full min-h-screen bg-void-black overflow-x-hidden">
+      {/* Hero Section - Immersive landing */}
+      <Hero />
 
-      {/* Custom cursor */}
-      <CustomCursor />
+      {/* Album Cube Section - 3D showcase */}
+      <AlbumCube />
 
-      {/* Particle field */}
-      <ParticleField />
+      {/* Parallax Gallery Section */}
+      <ParallaxGallery />
 
-      {/* Navigation */}
-      <Navigation />
+      {/* Tour Schedule Section */}
+      <TourSchedule onSetupClick={() => setCurrentPage('setup')} />
 
-      {/* Main content */}
-      <main>
-        <Hero />
-        <About />
-        <Works />
-        <Services />
-        <FAQ />
-        <Testimonials />
-        <Pricing />
-        <Blog />
-        <Contact />
-        <Footer />
-      </main>
-    </div>
+      {/* Footer Section */}
+      <Footer onSetupClick={() => setCurrentPage('setup')} />
+    </main>
   );
 }
 
