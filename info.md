@@ -1,6 +1,6 @@
-# Photographer Style Template
+# Playza Template
 
-A high-end, dark-themed single-page website template with dramatic GSAP animations, 3D transforms, particle effects, and a cinematic aesthetic. Ideal for photographers, creative studios, visual artists, and luxury brands.
+A high-impact, immersive single-page website template designed for music artists, bands, and entertainment brands. Features a dark cyberpunk aesthetic with neon accents, 3D album cube, parallax galleries, and smooth scroll-driven animations.
 
 ## Language
 
@@ -13,29 +13,28 @@ The actual content of the website should match the user's query.
 
 ## Features
 
-- Full-screen hero with chromatic aberration and parallax scrolling
-- GSAP ScrollTrigger animations on every section (scroll-triggered reveals, 3D flips, elastic bounces)
-- Interactive custom cursor with hover states (desktop only)
-- Canvas-based floating particle field background
-- Noise texture overlay for cinematic grain
-- Floating image preview on service item hover
-- 3D card transforms with mouse-tracking rotation
-- Animated price counter with GSAP tweening
-- Typewriter effect for blog section title
-- Clip-path polygon reveal animations
-- Marquee text with per-character highlighting in footer
-- Accordion FAQ with alternating left/right offset
-- Responsive mobile menu with staggered link animations
-- Reduced motion support via prefers-reduced-motion
+- Full-screen hero with animated text decode effect
+- 3D rotating album cube (Three.js / React Three Fiber)
+- Dual parallax image strips with scroll-driven movement
+- Horizontal-scrolling gallery with pinned scroll
+- Infinite marquee ticker
+- Tour schedule section with venue previews
+- Full-screen artist portrait with parallax overlay
+- Footer with social links, contact info, newsletter signup
+- Lenis smooth scrolling integrated with GSAP ScrollTrigger
+- Velocity-based motion blur and letter-spacing effects
+- Fully responsive design
 
 ## Tech Stack
 
 - React 19 + TypeScript
 - Vite 7
-- Tailwind CSS 3 + tailwindcss-animate
-- GSAP 3 (ScrollTrigger)
+- Tailwind CSS 3.4 + custom CSS animations
+- Three.js + React Three Fiber + Drei
+- GSAP 3 + ScrollTrigger
+- Lenis (smooth scroll)
 - Lucide React (icons)
-- Geist font (Google Fonts)
+- Radix UI primitives
 
 ## Quick Start
 
@@ -46,116 +45,186 @@ npm run dev
 
 ## Configuration
 
-All content is managed in `src/config.ts`. Each section reads from its own exported config constant. When config fields are empty, the corresponding section returns `null` and is hidden.
+All content is managed in `src/config.ts`. Each section has its own config object with TypeScript interfaces.
 
-### siteConfig
-- `title` (string): Browser tab title. Example: `"Aperture Studio"`
-- `description` (string): Meta description. Example: `"Professional photography services"`
-- `language` (string): HTML lang attribute. Example: `"en"`
+### SiteConfig
 
-### navigationConfig
-- `logo` (string): Brand name in the navbar. Example: `"APERTURE"`
-- `items` (NavItem[]): Nav links. Example: `[{ label: "Works", href: "#works" }, { label: "About", href: "#about" }]`
+```ts
+siteConfig: {
+  title: string;       // Browser tab title
+  description: string; // Site meta description
+  language: string;    // Language code
+}
+```
 
-### heroConfig
-- `title` (string): Large animated hero title (each character animates). Example: `"APERTURE"`
-- `subtitle` (string): Subtitle text. Example: `"Capture Your Vision"`
-- `backgroundImage` (string): Path to hero image. Example: `"/hero-main.jpg"`
-- `servicesLabel` (string): Vertical text on left side. Example: `"Photography | Video | Post"`
-- `copyright` (string): Bottom-right text. Example: `"© 2024 Aperture Studio"`
+### HeroConfig
 
-### aboutConfig
-- `titleLine1` (string): First title line. Example: `"We blend artistry with technical excellence,"`
-- `titleLine2` (string): Second title line. Example: `"creating visual stories that captivate and endure."`
-- `description` (string): About paragraph text.
-- `image1` (string): Primary about image path. Example: `"/about-1.jpg"`
-- `image1Alt` (string): Alt text for image 1.
-- `image2` (string): Secondary overlapping image path. Example: `"/about-2.jpg"`
-- `image2Alt` (string): Alt text for image 2.
-- `authorImage` (string): Author portrait path. Example: `"/photographer.jpg"`
-- `authorName` (string): Author name. Example: `"Alex Chen"`
-- `authorBio` (string): Author biography text (animated character by character).
+```ts
+heroConfig: {
+  backgroundImage: string;     // Hero background image path
+  brandName: string;           // Brand name in top-left logo
+  decodeText: string;          // Main title with decode animation
+  decodeChars: string;         // Characters for scramble effect
+  subtitle: string;            // Subtitle below title
+  ctaPrimary: string;          // Primary CTA button text
+  ctaPrimaryTarget: string;    // Section ID to scroll to
+  ctaSecondary: string;        // Secondary CTA button text
+  ctaSecondaryTarget: string;  // Section ID to scroll to
+  cornerLabel: string;         // Top-right corner label
+  cornerDetail: string;        // Top-right corner detail
+  navItems: [                  // Navigation pill buttons
+    {
+      label: string;
+      sectionId: string;       // Target: "albums", "gallery", "tour", "contact"
+      icon: "disc" | "play" | "calendar" | "music";
+    }
+  ];
+}
+```
 
-### worksConfig
-- `title` (string): Section title (animated per character). Example: `"Selected Works"`
-- `subtitle` (string): Subtitle. Example: `"A curated collection of our finest work."`
-- `projects` (WorkItem[]): Portfolio items. Example: `[{ id: 1, title: "Aurora Series", category: "Editorial", image: "/work-1.jpg" }]`
+### AlbumCubeConfig
 
-### servicesConfig
-- `title` (string): Section title. Example: `"Our Craft"`
-- `subtitle` (string): Subtitle. Example: `"Every project is an opportunity to push boundaries."`
-- `services` (ServiceItem[]): Service items. Example: `[{ id: "01", title: "Editorial Photography", description: "High-end fashion and commercial shoots", image: "/service-1.jpg" }]`
+```ts
+albumCubeConfig: {
+  albums: [
+    {
+      id: number;
+      title: string;           // Album title (displayed large)
+      subtitle: string;         // Subtitle text (background watermark)
+      image: string;           // Album cover image path
+    }
+  ];
+  cubeTextures: string[];      // Exactly 6 images for cube faces
+                               // Order: right, left, top, bottom, front, back
+  scrollHint: string;          // Bottom-right scroll hint text
+}
+```
 
-### testimonialsConfig
-- `title` (string): Section title. Example: `"Client Voices"`
-- `testimonials` (TestimonialItem[]): Items. Example: `[{ id: 1, name: "Sarah Johnson", title: "Creative Director", quote: "Extraordinary work.", image: "/testimonial-1.jpg" }]`
+### ParallaxGalleryConfig
 
-### pricingConfig
-- `title` (string): Section title. Example: `"Investment"`
-- `subtitle` (string): Subtitle. Example: `"Premium packages crafted for exceptional results."`
-- `ctaButtonText` (string): Card button text. Example: `"Choose Plan"`
-- `plans` (PricingPlan[]): Plans. Example: `[{ id: 1, name: "Essential", price: 500, unit: "per session", featured: false, features: ["2-hour shoot", "20 edited photos"] }]`
+```ts
+parallaxGalleryConfig: {
+  sectionLabel: string;        // Parallax section label
+  sectionTitle: string;        // Parallax section title
+  galleryLabel: string;        // Gallery section label
+  galleryTitle: string;        // Gallery section title
+  marqueeTexts: string[];      // Marquee ticker texts
+  endCtaText: string;          // End-of-gallery CTA text
+  parallaxImagesTop: [         // Top row (6 images recommended)
+    { id: number; src: string; alt: string; }
+  ];
+  parallaxImagesBottom: [      // Bottom row (6 images recommended)
+    { id: number; src: string; alt: string; }
+  ];
+  galleryImages: [             // Horizontal gallery (6 images recommended)
+    { id: number; src: string; title: string; date: string; }
+  ];
+}
+```
 
-### faqConfig
-- `title` (string): Section title. Example: `"FAQ"`
-- `faqs` (FAQItem[]): Questions. Example: `[{ question: "What is your turnaround time?", answer: "Most projects complete within 2-4 weeks." }]`
+### TourScheduleConfig
 
-### blogConfig
-- `title` (string): Section title. Example: `"Studio Notes"`
-- `subtitle` (string): Subtitle. Example: `"Insights from our creative journey."`
-- `allPostsLabel` (string): View all button. Example: `"All Posts"`
-- `readMoreLabel` (string): Read more link. Example: `"Read More"`
-- `readTimePrefix` (string): Prefix before read time. Example: `"Read "`
-- `posts` (BlogPost[]): Blog posts. Example: `[{ id: 1, title: "The Art of Natural Light", excerpt: "...", readTime: "5 min", date: "Mar 15, 2024", image: "/blog-1.jpg", category: "Tips" }]`
+```ts
+tourScheduleConfig: {
+  sectionLabel: string;
+  sectionTitle: string;
+  vinylImage: string;          // Spinning vinyl disc image
+  buyButtonText: string;
+  detailsButtonText: string;
+  bottomNote: string;
+  bottomCtaText: string;
+  statusLabels: {
+    onSale: string;
+    soldOut: string;
+    comingSoon: string;
+    default: string;
+  };
+  tourDates: [
+    {
+      id: number;
+      date: string;            // "YYYY.MM.DD"
+      time: string;            // "HH:MM"
+      city: string;
+      venue: string;
+      status: "on-sale" | "sold-out" | "coming-soon";
+      image: string;           // Venue preview image
+    }
+  ];
+}
+```
 
-### contactConfig
-- `title` (string): Section title (animated per character). Example: `"Let's Create Together"`
-- `subtitle` (string): Subtitle. Example: `"Your vision deserves an extraordinary presentation."`
-- `nameLabel` (string): Name field label. Example: `"Name *"`
-- `emailLabel` (string): Email field label. Example: `"Email *"`
-- `projectTypeLabel` (string): Project type label. Example: `"Project Type"`
-- `projectTypePlaceholder` (string): Select placeholder. Example: `"Select..."`
-- `projectTypeOptions` (ContactFormOption[]): Options. Example: `[{ value: "editorial", label: "Editorial Photography" }]`
-- `messageLabel` (string): Message label. Example: `"Message"`
-- `submitButtonText` (string): Submit button. Example: `"Send Message"`
-- `image` (string): Contact section image path. Example: `"/contact.jpg"`
+### FooterConfig
 
-### footerConfig
-- `marqueeText` (string): Scrolling text. Example: `"Every Vision Deserves to Be Captured"`
-- `marqueeHighlightChars` (string[]): Characters to glow in red. Example: `["V", "C"]`
-- `navLinks1` (FooterLink[]): Column 1 links. Example: `[{ label: "Home", href: "#hero" }]`
-- `navLinks2` (FooterLink[]): Column 2 links. Supports icon field: `"Instagram"` or `"Dribbble"`. Example: `[{ label: "Instagram", href: "#", icon: "Instagram" }]`
-- `ctaText` (string): CTA text. Example: `"View More"`
-- `ctaHref` (string): CTA href. Example: `"#contact"`
-- `copyright` (string): Copyright line. Example: `"© 2024 Aperture Studio. All rights reserved."`
-- `tagline` (string): Tagline. Example: `"Crafted with passion"`
+```ts
+footerConfig: {
+  portraitImage: string;         // Full-screen portrait image
+  portraitAlt: string;
+  heroTitle: string;             // Large overlay title
+  heroSubtitle: string;
+  artistLabel: string;
+  artistName: string;
+  artistSubtitle: string;
+  brandName: string;
+  brandDescription: string;
+  quickLinksTitle: string;
+  quickLinks: string[];
+  contactTitle: string;
+  emailLabel: string;
+  email: string;
+  phoneLabel: string;
+  phone: string;
+  addressLabel: string;
+  address: string;
+  newsletterTitle: string;
+  newsletterDescription: string;
+  newsletterButtonText: string;
+  subscribeAlertMessage: string;
+  copyrightText: string;
+  bottomLinks: string[];
+  socialLinks: [
+    {
+      icon: "instagram" | "twitter" | "youtube" | "music";
+      label: string;
+      href: string;
+    }
+  ];
+  galleryImages: [
+    { id: number; src: string; }
+  ];
+}
+```
 
 ## Required Images
 
 Place in `public/` directory:
 
-- `hero-main.jpg` - Hero background (1920x1080+)
-- `about-1.jpg` - About primary image (800x1200)
-- `about-2.jpg` - About secondary image (600x900)
-- `photographer.jpg` - Author portrait (400x400)
-- `work-1.jpg` to `work-4.jpg` - Portfolio items (800x1067, 3:4 ratio)
-- `service-1.jpg` to `service-4.jpg` - Service preview images (600x800)
-- `testimonial-1.jpg` to `testimonial-3.jpg` - Testimonial avatars (400x400)
-- `blog-1.jpg`, `blog-2.jpg` - Blog covers (1200x675, 16:9 ratio)
-- `contact.jpg` - Contact section image (800x1200)
+| Image | Size | Usage |
+|-------|------|-------|
+| Hero background | 1920x1080px | Hero section background |
+| Album covers (4) | 800x800px | Cube faces + album data |
+| Extra cube texture | 800x800px | Additional cube face |
+| Concert photos (6+) | 800x500px | Parallax strips + gallery |
+| Venue photos (4) | 800x600px | Tour venue previews |
+| Artist portrait | 800x1200px | Footer portrait section |
+| Vinyl disc | 400x400px PNG | Tour section spinner |
 
 ## Design
 
-- **Color scheme**: Dark theme with black background (#000000), white text, red accent (#ea0000)
-- **Font**: Geist (Google Fonts), with a dramatic type scale from 14px to 168px
-- **Visual effects**: Noise overlay, chromatic aberration, particle field, custom cursor
-- **Animations**: GSAP-powered with scroll triggers on every section
+### Colors
+- Void Black: `#050508` (primary background)
+- Void Dark: `#0A0A0F` (secondary background)
+- Neon Cyan: `#00D4FF` (primary accent)
+- Neon Blue: `#4D9FFF` (secondary accent)
+- Soft Blue: `#9DC4FF` (tertiary accent, tour section bg)
+
+### Fonts
+- Display: Inter (800 weight) -- headings, buttons
+- Monospace: JetBrains Mono -- labels, dates, decode text
 
 ## Notes
 
-- Sections with empty config automatically return null (hidden)
-- Custom cursor and particle effects degrade gracefully on touch/mobile devices
-- Footer icon field supports "Instagram" and "Dribbble" as string values mapped to Lucide icons
-- The FAQ answer text is rendered as a single paragraph (no sentence splitting)
-- Price values animate from 0 to target value when scrolled into view
-- The `language` field in siteConfig should be set to match the content language (e.g., "en", "zh-CN", "ja")
+- Edit ONLY `src/config.ts` to change content.
+- All animations are scroll-driven via GSAP ScrollTrigger -- they remain unchanged.
+- The 3D cube requires exactly 6 textures.
+- Images go in `public/` with paths like `"/image-name.jpg"`.
+- Sections return null when config is empty.

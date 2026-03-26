@@ -25,7 +25,7 @@ Your contact form is now ready to send emails! Follow these steps to complete th
 
 **To Email:**
 ```
-szlgyjanos25@gmail.com
+aseryesports@gmail.com
 ```
 
 **Subject:**
